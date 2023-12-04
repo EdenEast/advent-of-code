@@ -7,6 +7,9 @@ watch year="2023":
 run day part year="2023":
   cargo run -- run {{day}} {{part}} {{year}}
 
+sample day part year="2023":
+  cargo run -- test {{day}} {{part}} {{year}}
+
 test year="2023":
   (cd ./aoc_{{year}} ; cargo test)
 
