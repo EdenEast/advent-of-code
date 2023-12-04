@@ -9,12 +9,12 @@ pub struct Args {
 
 #[derive(Subcommand)]
 pub enum Commands {
-    #[command(about = "Run a solution to a problem")]
+    #[command(visible_alias("r"), about = "Run a solution to a problem")]
     Run {
         day: u32,
         part: char,
         year: Option<u32>,
     },
-    #[command(about = "List all solutions for a given year")]
+    #[command(visible_alias("l"), about = "List all solutions for a given year")]
     List { year: Option<u32> },
 }

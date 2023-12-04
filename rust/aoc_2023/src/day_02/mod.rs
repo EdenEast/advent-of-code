@@ -1,5 +1,7 @@
 use common::{Answer, Solution};
 
+mod nom;
+
 pub struct Day02;
 
 // 12 red cubes, 13 green cubes, and 14 blue cubes
@@ -11,6 +13,16 @@ impl Solution for Day02 {
     }
 
     fn part_a(&self, input: &str) -> Answer {
+        self.a_nom_parser(input)
+    }
+
+    fn part_b(&self, input: &str) -> Answer {
+        self.b_nom_parser(input)
+    }
+}
+
+impl Day02 {
+    pub fn a_match_and_split(&self, input: &str) -> Answer {
         parse(input)
             .iter()
             .enumerate()
@@ -20,8 +32,33 @@ impl Solution for Day02 {
             .into()
     }
 
-    fn part_b(&self, input: &str) -> Answer {
+    pub fn a_nom_parser(&self, input: &str) -> Answer {
+        nom::parse(input)
+            .unwrap()
+            .1
+            .iter()
+            .enumerate()
+            .filter(|(_, games)| games.iter().all(|game| game.is_possible()))
+            .map(|x| x.0 + 1)
+            .sum::<usize>()
+            .into()
+    }
+
+    pub fn b_match_and_split(&self, input: &str) -> Answer {
         parse(input)
+            .iter()
+            .map(|games| {
+                let max = games.iter().fold(CubeSet::default(), |acc, x| acc.max(x));
+                max.red * max.green * max.blue
+            })
+            .sum::<u32>()
+            .into()
+    }
+
+    pub fn b_nom_parser(&self, input: &str) -> Answer {
+        nom::parse(input)
+            .unwrap()
+            .1
             .iter()
             .map(|games| {
                 let max = games.iter().fold(CubeSet::default(), |acc, x| acc.max(x));
@@ -63,7 +100,7 @@ fn parse(input: &str) -> Vec<Vec<CubeSet>> {
 }
 
 #[derive(Debug, Default)]
-struct CubeSet {
+pub struct CubeSet {
     red: u32,
     green: u32,
     blue: u32,
@@ -88,14 +125,26 @@ mod tests {
     use super::*;
 
     #[test]
-    fn part_a() {
-        let answer = Day02.part_a(include_str!("../../../puzzles/2023/02/test-01"));
+    fn part_a_match_and_split() {
+        let answer = Day02.a_match_and_split(include_str!("../../../../puzzles/2023/02/test-01"));
         assert_eq!(answer, 8.into());
     }
 
     #[test]
-    fn part_b() {
-        let answer = Day02.part_b(include_str!("../../../puzzles/2023/02/test-01"));
+    fn part_a_nom_parser() {
+        let answer = Day02.a_nom_parser(include_str!("../../../../puzzles/2023/02/test-01"));
+        assert_eq!(answer, 8.into());
+    }
+
+    #[test]
+    fn part_b_match_and_split() {
+        let answer = Day02.b_match_and_split(include_str!("../../../../puzzles/2023/02/test-01"));
+        assert_eq!(answer, 2286.into());
+    }
+
+    #[test]
+    fn part_b_nom_parser() {
+        let answer = Day02.b_nom_parser(include_str!("../../../../puzzles/2023/02/test-01"));
         assert_eq!(answer, 2286.into());
     }
 }
