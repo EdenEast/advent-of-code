@@ -1,0 +1,14 @@
+default:
+  just --choose
+
+watch year="2023":
+  watchexec -c clear -w aoc_{{year}}/src just test
+
+run day part year="2023":
+  cargo run -- run {{day}} {{part}} {{year}}
+
+test year="2023":
+  (cd ./aoc_{{year}} ; cargo test)
+
+bench day year="2023":
+  (cd ./aoc_{{year}} ; cargo bench --bench day_{{day}})
