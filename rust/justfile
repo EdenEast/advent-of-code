@@ -1,8 +1,8 @@
 default:
   just --choose
 
-watch year="2023":
-  watchexec -c clear -w aoc_{{year}}/src just test
+watch year="2023" op="test":
+  watchexec -c clear -w aoc_{{year}}/src just {{op}}
 
 run day part year="2023":
   cargo run -- run {{day}} {{part}} {{year}}
