@@ -4,8 +4,11 @@ default:
 watch year="2023" op="test":
   watchexec -c clear -w aoc_{{year}}/src just {{op}}
 
-run day part year="2023":
+drun day part year="2023":
   cargo run -- run {{day}} {{part}} {{year}}
+
+run day part year="2023":
+  cargo run --release -- run {{day}} {{part}} {{year}}
 
 sample day part year="2023":
   cargo run -- test {{day}} {{part}} {{year}}
