@@ -13,6 +13,8 @@ regex = "1.10.2"
 
 [dev-dependencies]
 divan = "0.1.4"
+rstest = "0.18.2"
+indoc = "2"
 
 [[bench]]
 name = "day_01"
@@ -44,5 +46,9 @@ harness = false
 
 [[bench]]
 name = "day_09"
+harness = false
+
+[[bench]]
+name = "day_10"
 harness = false
 
