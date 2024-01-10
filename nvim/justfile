@@ -3,14 +3,20 @@ run day year="2023":
 
 encode:
   #!/usr/bin/env bash
-  for s in "$(fd ^solution$)"; do
-    echo "$s"
-    base64 $s > "$(dirname $s)/encoded_solution"
+  for year in ./*; do
+    if [ -d $year ]; then
+      for day in $year/*; do
+        base64 "$day/solution" > "$day/encoded_solution"
+      done
+    fi
   done
 
 decode:
   #!/usr/bin/env bash
-  for s in "$(fd ^encoded_solution$)"; do
-    echo "$s"
-    base64 -d  $s > "$(dirname $s)/solution"
+  for year in ./*; do
+    if [ -d $year ]; then
+      for day in $year/*; do
+        base64 "$day/encoded_solution" > "$day/solution"
+      done
+    fi
   done
