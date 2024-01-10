@@ -1,0 +1,16 @@
+run day year="2023":
+  nvim --clean ../puzzles/{{year}}/{{day}}/input -s {{year}}/{{day}}/solution
+
+encode:
+  #!/usr/bin/env bash
+  for s in "$(fd ^solution$)"; do
+    echo "$s"
+    base64 $s > "$(dirname $s)/encoded_solution"
+  done
+
+decode:
+  #!/usr/bin/env bash
+  for s in "$(fd ^encoded_solution$)"; do
+    echo "$s"
+    base64 -d  $s > "$(dirname $s)/solution"
+  done
