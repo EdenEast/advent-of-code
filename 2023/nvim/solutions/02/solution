@@ -1,0 +1,8 @@
+:%s/\(\d\+\)\ze red/\=str2nr(submatch(1)) > 12 ? '#' : submatch(1)/g
+:%s/\(\d\+\)\ze green/\=str2nr(submatch(1)) > 13 ? '#' : submatch(1)/g
+:%s/\(\d\+\)\ze blue/\=str2nr(submatch(1)) > 14 ? '#' : submatch(1)/g
+:g/\#/d _
+:%s/Game \(\d\+\).*/\1
+ggVGJ:s/ /+/g
+dd"="
+p

@@ -1,0 +1,14 @@
+run day:
+  nvim --clean ../../data/2023/{{day}}/input -s ./solutions/{{day}}/solution
+
+encode:
+  #!/usr/bin/env bash
+  for day in ./solutions/*; do
+    base64 "$day/solution" > "$day/encoded"
+  done
+
+decode:
+  #!/usr/bin/env bash
+  for day in ./solutions/*; do
+    base64 -d "$day/encoded" > "$day/solution"
+  done
