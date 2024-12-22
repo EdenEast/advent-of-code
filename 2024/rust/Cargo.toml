@@ -6,3 +6,11 @@ edition = "2021"
 [dependencies]
 libaoc = { path = "../../common/rust/libaoc" }
 
+[dev-dependencies]
+divan = "0.1.17"
+rstest = "0.23.0"
+indoc = "2.0.5"
+
+[[bench]]
+name = "day_01"
+harness = false

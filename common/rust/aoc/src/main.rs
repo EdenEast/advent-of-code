@@ -12,6 +12,9 @@ const YEARS: [u32; 1] = [2024];
 pub struct Args {
     #[command(subcommand)]
     pub command: Commands,
+
+    #[arg(short, long, help = "Prints the answer only")]
+    pub minimal: bool,
 }
 
 #[derive(Subcommand)]
@@ -47,7 +50,9 @@ fn main() -> eyre::Result<()> {
 
             let input = libaoc::load(year, day + 1).unwrap();
 
-            println!("[*] Running: {} ({})", solution.name(), part);
+            if !args.minimal {
+                println!("[*] Running: {} ({})", solution.name(), part);
+            }
             let start = Instant::now();
             let out = match part {
                 1 => solution.part1(&input),
@@ -58,7 +63,11 @@ fn main() -> eyre::Result<()> {
             };
 
             let time = start.elapsed().as_nanos();
-            println!("[+] OUT: {out} ({})", libaoc::human_time(time));
+            if args.minimal {
+                println!("{}", out);
+            } else {
+                println!("[+] OUT: {out} ({})", libaoc::human_time(time));
+            }
         }
         Commands::Test { day, part, year } => {
             let year = year.unwrap_or(DEFAULT_YEAR);
@@ -71,7 +80,9 @@ fn main() -> eyre::Result<()> {
 
             let input = libaoc::load_test(year, day + 1, part).unwrap();
 
-            println!("[*] Testing: {} ({})", solution.name(), part);
+            if !args.minimal {
+                println!("[*] Testing: {} ({})", solution.name(), part);
+            }
             let start = Instant::now();
             let out = match part {
                 1 => solution.part1(&input),
@@ -82,7 +93,11 @@ fn main() -> eyre::Result<()> {
             };
 
             let time = start.elapsed().as_nanos();
-            println!("[+] OUT: {out} ({})", libaoc::human_time(time));
+            if args.minimal {
+                println!("{}", out);
+            } else {
+                println!("[+] OUT: {out} ({})", libaoc::human_time(time));
+            }
         }
         Commands::List { year } => {
             let years = year.map(|y| vec![y]).unwrap_or_else(|| YEARS.to_vec());

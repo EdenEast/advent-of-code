@@ -1,2 +1,30 @@
+default:
+  just --choose
+
 run day part:
-  cd ../../common/rust/aoc && cargo run --release -- run {{day}} {{part}} 2024
+  (cd ../../common/rust/aoc; cargo run --release -- run {{day}} {{part}} 2024)
+
+drun day part:
+  (cd ../../common/rust/aoc; cargo run -- run {{day}} {{part}} 2024)
+
+mrun day part:
+  (cd ../../common/rust/aoc; cargo run --release -- --minimal run {{day}} {{part}} 2024)
+
+test day part:
+  (cd ../../common/rust/aoc; cargo run -- test {{day}} {{part}} 2024)
+
+watch:
+  watchexec -c clear -w src cargo test
+
+bench day:
+  cargo bench --bench day_{{day}}
+
+submit day part:
+  #!/usr/bin/env bash
+  cd ../../common/rust/aoc
+  answer=$(cargo run --release -- --minimal run {{day}} {{part}} 2024)
+  aoc submit --day {{day}} --year 2024 {{part}} "$answer"
+
+puzzle day:
+  (cd ../..; just puzzle {{day}} 2024)
+
