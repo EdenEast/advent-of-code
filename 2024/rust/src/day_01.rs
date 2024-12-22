@@ -6,7 +6,7 @@ pub struct Day01;
 
 impl Solution for Day01 {
     fn name(&self) -> &'static str {
-        "Day 01: Historian Hysteria"
+        "Historian Hysteria"
     }
     fn part1(&self, input: &str) -> Answer {
         self.part1(input)

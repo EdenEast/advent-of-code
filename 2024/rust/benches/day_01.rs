@@ -13,7 +13,7 @@ fn part_1() {
 
 #[divan::bench]
 fn part_2() {
-    Day01.part2(divan::black_box(include_str!(
+    Day01.part1(divan::black_box(include_str!(
         "../../../data/2024/01/input"
     )));
 }

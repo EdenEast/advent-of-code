@@ -5,7 +5,7 @@ use eyre::eyre;
 use libaoc::Solution;
 
 const DEFAULT_YEAR: u32 = 2024;
-const YEARS: [u32; 1] = [2024];
+const YEARS: [u32; 2] = [2024, 2023];
 
 #[derive(Parser)]
 #[command(name = "advent_of_code")]
@@ -127,7 +127,7 @@ fn main() -> eyre::Result<()> {
 fn get_year(year: u32) -> &'static [&'static dyn Solution] {
     match year {
         2024 => &aoc_2024::ALL,
-        // 2023 => &aoc_2023::ALL,
+        2023 => &aoc_2023::ALL,
         _ => &[],
     }
 }
