@@ -23,6 +23,7 @@ submit day part:
   #!/usr/bin/env bash
   cd ../../common/rust/aoc
   answer=$(cargo run --release -- --minimal run {{day}} {{part}} 2023)
+  echo "Submitting answer for day {{day}} part {{part}}: $answer"
   aoc submit --day {{day}} --year 2023 {{part}} "$answer"
 
 puzzle day:

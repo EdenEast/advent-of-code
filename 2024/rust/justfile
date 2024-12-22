@@ -1,3 +1,11 @@
+alias b := bench
+alias r := run
+alias m := mrun
+alias p := puzzle
+alias s := submit
+alias t := test
+alias w := watch
+
 default:
   just --choose
 
