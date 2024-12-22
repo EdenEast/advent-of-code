@@ -1,0 +1,2 @@
+run day part:
+  cd ../../common/rust/aoc && cargo run --release -- run {{day}} {{part}} 2024

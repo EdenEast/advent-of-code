@@ -1,0 +1,10 @@
+[package]
+name = "aoc"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.5.23", features = ["derive"] }
+libaoc = { path = "../libaoc" }
+aoc_2024 = { path = "../../../2024/rust" }
+eyre = "0.6.12"
