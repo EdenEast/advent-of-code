@@ -36,3 +36,19 @@ submit day part:
 puzzle day:
   (cd ../..; just puzzle {{day}} 2024)
 
+new:
+  #!/usr/bin/env bash
+  last=$(fd day_ src | cut -c 9- | cut -c 1-2 | tail -n 1)
+  ((last++))
+  last=$(printf "%02d" $last)
+  cp ./template/benches/day_xx.rs ./benches/day_${last}.rs
+  sd "XX" "$last" ./benches/day_${last}.rs
+  echo "" >> ./Cargo.toml
+  echo "[[bench]]" >> ./Cargo.toml
+  echo "name = \"day_${last}\"" >> ./Cargo.toml
+  echo "harness = false" >> ./Cargo.toml
+  cp ./template/src/day_xx.rs ./src/day_${last}.rs
+  sd "XX" "$last" ./src/day_${last}.rs
+  nvim ./src/lib.rs -s ./template/append_to_lib
+
+
