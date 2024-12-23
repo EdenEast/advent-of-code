@@ -5,7 +5,7 @@ pub struct Day09;
 
 impl Solution for Day09 {
     fn name(&self) -> &'static str {
-        "Haunted Wasteland"
+        "Mirage Maintenance"
     }
 
     /// Start a "AAA" and follow links until "ZZZ" is eventually found
