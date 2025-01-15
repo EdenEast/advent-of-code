@@ -3,8 +3,8 @@ use std::{
     fmt::Display,
 };
 
-use libaoc::{Answer, Solution};
 use itertools::Itertools;
+use libaoc::{Answer, Solution};
 
 pub struct Day10;
 

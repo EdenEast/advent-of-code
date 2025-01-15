@@ -1,8 +1,13 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    flake-utils = {
-      url = "github:numtide/flake-utils";
+    flake-root.url = "github:srid/flake-root";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rust-overlay = {
@@ -12,26 +17,25 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, rust-overlay }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        overlays = [ (import rust-overlay) ];
-        pkgs = import nixpkgs { inherit system overlays; };
-        rustToolchain = pkgs.rust-bin.stable.latest.default.override {
-          extensions = [ "rust-src" "rust-analyzer" ];
-        };
-      in
-      {
-        devShells.default = pkgs.mkShell {
-          name = "aoc";
-          nativeBuildInputs = [
-            rustToolchain
-          ];
-          packages = with pkgs; [
-            aoc-cli
-            just
-            watchexec
-          ];
-        };
-      });
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      debug = true;
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      imports = [
+        ./nix
+      ];
+    };
 }
+
+# References:
+# - https://sourcegraph.com/github.com/nix-community/vulnix/-/blob/flake.nix
+#   - Structure of using flake-parts with treefmt-nix
+#
+# - https://sourcegraph.com/github.com/informalsystems/cosmos.nix/-/blob/flake.nix
+#   - Structure of using rust-overlay with flake-parts and have multiple devshells
+
